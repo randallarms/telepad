@@ -1,0 +1,25 @@
+name: TelePad
+main: com.kraken.telepad.TelePad
+version: 1.0 (alpha)
+commands: 
+     telepad:
+        description: Info on the TelePad plugin.
+        usage: /<command>
+     jump:
+        description: Jump a short (~< 100m) distance.
+        usage: /<command>
+     tele:
+        description: Teleport to a set location.
+        usage: /<command> <name>
+     teledel:
+        description: Delete a teleport.
+        usage: /<command> <name>
+        aliases: [teledelete, tpdelete]
+     telelist:
+        description: List teleports.
+        usage: /<command>
+        aliases: [tplist]
+     teleset:
+        description: Set a teleport.
+        usage: /<command> <name>
+        aliases: [tpset]
