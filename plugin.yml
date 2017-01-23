@@ -1,6 +1,6 @@
 name: TelePad
 main: com.kraken.telepad.TelePad
-version: 1.1 (alpha)
+version: 1.2 (release)
 commands: 
      telepad:
         description: Info on the TelePad plugin.
@@ -23,3 +23,7 @@ commands:
         description: Set a teleport.
         usage: /<command> <name>
         aliases: [tpset]
+     opRequired:
+        description: Set the option to allow TP commands for OPs only.
+        usage: /<command> <on/off>
+        aliases: [oprequired, opreq]
