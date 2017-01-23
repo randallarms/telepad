@@ -1,27 +1,35 @@
 // ========================================================================
-// |TELEPAD v1.1
-// | by Kraken | https://www.spigotmc.org/members/kraken_.287802/
+// |TELEPAD v1.2
+// | by Kraken | https://www.spigotmc.org/resources/telepad.34953/
 // | code inspired by various Bukkit & Spigot devs -- thank you. 
 // |
 // | Always free & open-source! If this plugin is being sold or re-branded,
 // | please let me know on the SpigotMC site, or wherever you can. Thanks!
-// | Source code: https://github.com/randallarms/voicebox
+// | Source code: https://github.com/randallarms/telepad
 // ========================================================================
 
 package com.kraken.telepad;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
-
-	public static TelePad plugin;
   	
+    private File optionsFile = new File("plugins/TelePad", "options.yml");
+    private FileConfiguration options = YamlConfiguration.loadConfiguration(optionsFile);
+	
+	boolean opRequired = true;
+	
 	@Override
     public void onEnable() {
     	
@@ -29,6 +37,20 @@ public class TelePad extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		TPListener listener = new TPListener();
 		pm.registerEvents(listener, this);
+		
+	  //Initialize the censor with a dummy value
+        if ( !options.getBoolean("loaded") ) {
+        	options.set("loaded", true);
+        	options.set("opRequired", true);
+        }
+        
+        try {
+        	options.save(optionsFile);
+		} catch (IOException ioe1) {
+			System.out.println("Could not properly initialize TelePad options file, expect possible errors.");
+		}
+
+        opRequired = options.getBoolean("opRequired");
 		
     }
     
@@ -40,6 +62,10 @@ public class TelePad extends JavaPlugin {
         
     }
     
+    public TelePad getInstance() {
+    	return this;
+    }
+    
   //TelePad commands
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -48,13 +74,18 @@ public class TelePad extends JavaPlugin {
 		
       //Command: telepad
         if ( cmd.getName().equalsIgnoreCase("telepad") && sender instanceof Player ) {
-            player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (v1.1)");
+            player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (v1.2)");
             return true;
         }
         
-      //OP commands
-        if ( sender instanceof Player && player.isOp() ) {
+      //Player commands
+        if ( sender instanceof Player ) {
         
+        	if ( opRequired && !player.isOp() ) {
+        		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have teleport privileges.");
+                return true;
+        	}
+        	
         	Teleprocessing tp = new Teleprocessing(this);
         	
         	switch (command) {
@@ -89,9 +120,50 @@ public class TelePad extends JavaPlugin {
 			    	tp.teleSet(player, args);
 			        return true;
 			        
+			  //Command: opRequired
+        	    case "opRequired":
+        	    case "oprequired":
+        	    case "opReq":
+        	    case "opreq":
+        			  
+        	    	if ( args.length == 1 ) {
+        	    		switch ( args[0].toLowerCase() ) {
+        	    			case "on":
+        	    			case "enable":
+        	    			case "enabled":
+        	    			case "true":
+        	    				options.set("opRequired", true);
+        	    				opRequired = true;
+	    	    				try {
+	    	    			        options.save(optionsFile);
+	    	    				} catch (IOException ioe2) {
+	    	    					// No need to fuss!
+	    	    				}
+        	    				return true;
+        	    			case "off":
+        	    			case "disable":
+        	    			case "disabled":
+        	    			case "false":
+        	    				options.set("opRequired", false);
+        	    				opRequired = false;
+        	    				try {
+	    	    			        options.save(optionsFile);
+	    	    				} catch (IOException ioe3) {
+	    	    					// No need to fuss!
+	    	    				}
+        	    				return true;
+        	    			default:
+        	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opRequired <on/off>\".");
+        	        	    	return true;
+        	    		}
+        	    	}
+        	    	
+        	    	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opRequired <on/off>\".");
+        	    	return true;
+			        
 			    default:
 			    	  
-			        player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have teleport privileges.");
+			        player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Command not recognized.");
 			        return true;
 			    
 	        }
