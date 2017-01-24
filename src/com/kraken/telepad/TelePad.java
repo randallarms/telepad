@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.2
+// |TELEPAD v1.3
 // | by Kraken | https://www.spigotmc.org/resources/telepad.34953/
 // | code inspired by various Bukkit & Spigot devs -- thank you. 
 // |
@@ -71,12 +71,6 @@ public class TelePad extends JavaPlugin {
 
     	String command = cmd.getName();
 		Player player = (Player) sender;
-		
-      //Command: telepad
-        if ( cmd.getName().equalsIgnoreCase("telepad") && sender instanceof Player ) {
-            player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (v1.2)");
-            return true;
-        }
         
       //Player commands
         if ( sender instanceof Player ) {
@@ -89,6 +83,12 @@ public class TelePad extends JavaPlugin {
         	Teleprocessing tp = new Teleprocessing(this);
         	
         	switch (command) {
+        	
+        	  //Command: telepad
+        		case "telepad":
+    			  
+        			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (v1.3)");
+        			return true;
         	
 			  //Command: jump
         	    case "jump":
@@ -170,7 +170,6 @@ public class TelePad extends JavaPlugin {
         
         }
         
-        player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have teleport privileges.");
         return true;
         
     }
