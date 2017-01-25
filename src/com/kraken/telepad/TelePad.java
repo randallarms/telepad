@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.3
+// |TELEPAD v1.3.1
 // | by Kraken | https://www.spigotmc.org/resources/telepad.34953/
 // | code inspired by various Bukkit & Spigot devs -- thank you. 
 // |
@@ -42,13 +42,12 @@ public class TelePad extends JavaPlugin {
         if ( !options.getBoolean("loaded") ) {
         	options.set("loaded", true);
         	options.set("opRequired", true);
+        	try {
+            	options.save(optionsFile);
+    		} catch (IOException ioe1) {
+    			System.out.println("Could not properly initialize TelePad options file, expect possible errors.");
+    		}
         }
-        
-        try {
-        	options.save(optionsFile);
-		} catch (IOException ioe1) {
-			System.out.println("Could not properly initialize TelePad options file, expect possible errors.");
-		}
 
         opRequired = options.getBoolean("opRequired");
 		
@@ -58,7 +57,6 @@ public class TelePad extends JavaPlugin {
     public void onDisable() {
     	
         getLogger().info("TelePad has been disabled.");
-        saveConfig();
         
     }
     
@@ -87,7 +85,7 @@ public class TelePad extends JavaPlugin {
         	  //Command: telepad
         		case "telepad":
     			  
-        			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (v1.3)");
+        			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (v1.3.1)");
         			return true;
         	
 			  //Command: jump
