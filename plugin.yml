@@ -1,20 +1,21 @@
 name: TelePad
 main: com.kraken.telepad.TelePad
-version: 1.3.1 (release)
+version: 1.4 (release)
 commands: 
      telepad:
         description: Info on the TelePad plugin.
         usage: /<command>
-     jump:
-        description: Jump a short (~< 100m) distance.
-        usage: /<command>
      tele:
         description: Teleport to a set location.
         usage: /<command> <name>
+        aliases: [tp]
+     jump:
+        description: Jump a short (~< 100m) distance.
+        usage: /<command>
      teledel:
         description: Delete a teleport.
         usage: /<command> <name>
-        aliases: [teledelete, tpdelete]
+        aliases: [teledelete, tpdelete, tpdel]
      telelist:
         description: List teleports.
         usage: /<command>
@@ -23,7 +24,30 @@ commands:
         description: Set a teleport.
         usage: /<command> <name>
         aliases: [tpset]
-     opRequired:
+     opReqTP:
         description: Set the option to allow TP commands for OPs only.
         usage: /<command> <on/off>
-        aliases: [oprequired, opreq]
+        aliases: [opreqtp, oprequiredtp]
+     permsReqTP:
+        description: Set the option to allow TP commands for OPs only.
+        usage: /<command> <on/off>
+        aliases: [permsreqtp, permsrequiredtp]
+permissions:
+     telepad.*:
+        description: Permission for all TelePad commands.
+        children:
+           telepad.tp: true
+           telepad.telelist: true
+           telepad.teleset: true
+           telepad.teledel: true
+           telepad.jump: true
+     telepad.tp:
+        description: Permission to use the 'tele' command.
+     telepad.telelist:
+        description: Permission to use the 'telelist' command.
+     telepad.teleset:
+        description: Permission to use the 'teleset' command.
+     telepad.teledel:
+        description: Permission to use the 'teledel' command.
+     telepad.jump:
+        description: Permission to use the 'jump' command.

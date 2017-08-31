@@ -1,7 +1,7 @@
 #TelePad
 Kraken | https://www.spigotmc.org/resources/telepad.34953/
 
-Simple custom warp & teleportation plugin for Bukkit on Minecraft (MCv1.11.2).
+Simple custom warp & teleportation plugin for Bukkit on Minecraft (MCv1.12).
 
 HOW TO INSTALL AND USE: https://www.spigotmc.org/threads/telepad.210065/
 
