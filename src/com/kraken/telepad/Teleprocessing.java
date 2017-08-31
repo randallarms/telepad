@@ -19,6 +19,10 @@ public class Teleprocessing {
   //"tele" command processing
 	public void teleport(Player player, String[] args) {
 		
+		if ( !player.hasPermission("telepad.tp") && plugin.permsRequired ) {
+			return;
+		}
+		
 		if (args.length != 0) {	
     		
     		String teleName = new String("teleName not properly set");
@@ -44,6 +48,10 @@ public class Teleprocessing {
 	
   //"teleset" command processing
 	public void teleSet(Player player, String[] args) {
+		
+		if ( !player.hasPermission("telepad.teleset") && plugin.permsRequired ) {
+			return;
+		}
 		
 		if (args.length == 0 || args.length > 1) {
         	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleset <name> (with 3 characters or more in the name)");
@@ -72,6 +80,10 @@ public class Teleprocessing {
 	
   //"teledel" command processing
 	public void teleDelete(Player player, String[] args) {
+		
+		if ( !player.hasPermission("telepad.teledel") && plugin.permsRequired ) {
+			return;
+		}
 		
 		if (args.length == 0 || args.length < 1) {
 	    	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teledel <name>");
@@ -107,6 +119,10 @@ public class Teleprocessing {
   //"telelist" command processing
 	public void teleList(Player player) {
 		
+		if ( !player.hasPermission("telepad.telelist") && plugin.permsRequired ) {
+			return;
+		}
+		
 		String teleList = "";
     	int teleListLength = 0;
     	
@@ -132,6 +148,10 @@ public class Teleprocessing {
 	
   //"jump" command processing
 	public void jump(Player player) {
+		
+		if ( !player.hasPermission("telepad.jump") && plugin.permsRequired ) {
+			return;
+		}
 		
     	Location originalLocation = player.getLocation();
     	Random random = new Random();

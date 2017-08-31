@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.3.1
+// |TELEPAD v1.4
 // | by Kraken | https://www.spigotmc.org/resources/telepad.34953/
 // | code inspired by various Bukkit & Spigot devs -- thank you. 
 // |
@@ -24,44 +24,71 @@ import java.io.IOException;
 import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
-  	
-    private File optionsFile = new File("plugins/TelePad", "options.yml");
-    private FileConfiguration options = YamlConfiguration.loadConfiguration(optionsFile);
+	
+	public static String VERSION = "1.4";
 	
 	boolean opRequired = true;
+	boolean permsRequired = true;
+	
+	File optionsFile = new File("plugins/TelePad", "options.yml");
+    FileConfiguration options = YamlConfiguration.loadConfiguration(optionsFile);
 	
 	@Override
     public void onEnable() {
     	
-    	getLogger().info("TelePad has been enabled.");
+    	getLogger().info("[TELEPAD] TelePad enabling...");
 		PluginManager pm = getServer().getPluginManager();
 		TPListener listener = new TPListener();
 		pm.registerEvents(listener, this);
-		
-	  //Initialize the censor with a dummy value
+
         if ( !options.getBoolean("loaded") ) {
         	options.set("loaded", true);
         	options.set("opRequired", true);
+        	options.set("permsRequired", true);
         	try {
             	options.save(optionsFile);
-    		} catch (IOException ioe1) {
-    			System.out.println("Could not properly initialize TelePad options file, expect possible errors.");
+    		} catch (IOException ioe) {
+    			System.out.println("[TELEPAD] Could not properly initialize TelePad options file, expect possible errors.");
     		}
         }
 
         opRequired = options.getBoolean("opRequired");
+        getLogger().info("[TELEPAD] TelePad opRequired enabled: " + opRequired);
+        
+        permsRequired = options.getBoolean("permsRequired");
+        getLogger().info("[TELEPAD] TelePad permsRequired enabled: " + permsRequired);
 		
     }
     
     @Override
     public void onDisable() {
     	
-        getLogger().info("TelePad has been disabled.");
+        getLogger().info("[TELEPAD] TelePad disabling...");
         
     }
     
     public TelePad getInstance() {
     	return this;
+    }
+    
+    public void setOpRequired(boolean opRequired) {
+    	this.opRequired = opRequired;
+    	options.set("opRequired", opRequired);
+    	try {
+        	options.save(optionsFile);
+		} catch (IOException ioe) {
+			System.out.println("[TELEPAD] Could not properly set opReq, expect possible errors.");
+		}
+    }
+    
+    public void setPermsRequired(boolean permsRequired) {
+    	this.permsRequired = permsRequired;
+    	options.set("permsRequired", permsRequired);
+    	try {
+        	options.save(optionsFile);
+		} catch (IOException ioe) {
+			System.out.println("[TELEPAD] Could not properly set permsReq, expect possible errors.");
+		}
     }
     
   //TelePad commands
@@ -80,12 +107,12 @@ public class TelePad extends JavaPlugin {
         	
         	Teleprocessing tp = new Teleprocessing(this);
         	
-        	switch (command) {
+        	switch ( command.toLowerCase() ) {
         	
         	  //Command: telepad
         		case "telepad":
     			  
-        			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (v1.3.1)");
+        			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ")");
         			return true;
         	
 			  //Command: jump
@@ -94,70 +121,93 @@ public class TelePad extends JavaPlugin {
         			tp.jump(player);
 			        return true;
 			    
-			  //Command: tele
+			  //Command: tele, tp
         		case "tele":
+        		case "tp":
         			
 			    	tp.teleport(player, args);
 			    	return true; 
 			    
 			  //Command: teledel
         		case "teledel":
+        		case "teledelete":
+        		case "tpdel":
+        		case "tpdelete":
 			        
 			    	tp.teleDelete(player, args);
 			        return true;
 			    
 			  //Command: telelist
         		case "telelist":
+        		case "tplist":
 			    	
 			    	tp.teleList(player);
 			    	return true;
 			    
 			  //Command: teleset
         		case "teleset":
+        		case "tpset":
 			        
 			    	tp.teleSet(player, args);
 			        return true;
 			        
-			  //Command: opRequired
-        	    case "opRequired":
-        	    case "oprequired":
-        	    case "opReq":
-        	    case "opreq":
-        			  
-        	    	if ( args.length == 1 ) {
-        	    		switch ( args[0].toLowerCase() ) {
-        	    			case "on":
-        	    			case "enable":
-        	    			case "enabled":
-        	    			case "true":
-        	    				options.set("opRequired", true);
-        	    				opRequired = true;
-	    	    				try {
-	    	    			        options.save(optionsFile);
-	    	    				} catch (IOException ioe2) {
-	    	    					// No need to fuss!
-	    	    				}
-        	    				return true;
-        	    			case "off":
-        	    			case "disable":
-        	    			case "disabled":
-        	    			case "false":
-        	    				options.set("opRequired", false);
-        	    				opRequired = false;
-        	    				try {
-	    	    			        options.save(optionsFile);
-	    	    				} catch (IOException ioe3) {
-	    	    					// No need to fuss!
-	    	    				}
-        	    				return true;
-        	    			default:
-        	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opRequired <on/off>\".");
-        	        	    	return true;
-        	    		}
+			  //Command: opReqTP
+        	    case "oprequiredtp":
+        	    case "opreqtp":
+        	    		
+        	    	if ( !player.isOp() ) {
+        	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+        	    		return true;
         	    	}
         	    	
-        	    	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opRequired <on/off>\".");
-        	    	return true;
+    	    		switch ( args[0].toLowerCase() ) {
+    	    		
+    	    			case "on":
+    	    			case "enable":
+    	    			case "enabled":
+    	    			case "true":
+    	    				setOpRequired(true);
+    	    				return true;
+    	    			case "off":
+    	    			case "disable":
+    	    			case "disabled":
+    	    			case "false":
+    	    				setOpRequired(false);
+    	    				return true;
+    	    			default:
+    	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
+    	        	    	return true;
+    	        	    	
+    	    		}
+    	    		
+    		  //Command: permsReqTP
+        	    case "permsrequiredtp":
+        	    case "permsreqtp":
+        	    	
+        	    	if ( !player.isOp() ) {
+        	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+        	    		return true;
+        	    	}
+        	    		
+    	    		switch ( args[0].toLowerCase() ) {
+    	    		
+    	    			case "on":
+    	    			case "enable":
+    	    			case "enabled":
+    	    			case "true":
+    	    				setPermsRequired(true);
+    	    				return true;
+    	    			case "off":
+    	    			case "disable":
+    	    			case "disabled":
+    	    			case "false":
+    	    				setPermsRequired(false);
+    	    				return true;
+    	    			default:
+    	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
+    	        	    	return true;
+    	        	    	
+    	    		}
 			        
 			    default:
 			    	  
