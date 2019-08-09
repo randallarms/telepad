@@ -1,9 +1,6 @@
-#TelePad
-Kraken | https://www.spigotmc.org/resources/telepad.34953/
+# TelePad
 
 Simple custom warp & teleportation plugin for Bukkit on Minecraft (MCv1.12).
-
-HOW TO INSTALL AND USE: https://www.spigotmc.org/threads/telepad.210065/
 
 TelePad features the ability to travel between locations and worlds via simple command. The plugin has no dependencies and will likely have no effect on any other plugins already installed, even other teleport plugins! Always back-up to be sure, though.
 
