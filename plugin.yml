@@ -1,6 +1,6 @@
 name: TelePad
 main: com.kraken.telepad.TelePad
-version: 1.4.1 (release)
+version: 1.4.2 (release)
 commands: 
      telepad:
         description: Info on the TelePad plugin.
@@ -8,7 +8,6 @@ commands:
      tele:
         description: Teleport to a set location.
         usage: /<command> <name>
-        aliases: [tp]
      jump:
         description: Jump a short (~< 100m) distance.
         usage: /<command>
@@ -32,6 +31,9 @@ commands:
         description: Set the option to allow TP commands for OPs only.
         usage: /<command> <on/off>
         aliases: [permsreqtp, permsrequiredtp]
+     sparkles:
+        description: Set the option to allow sparkle effects for teleports.
+        usage: /<command> <on/off>
 permissions:
      telepad.*:
         description: Permission for all TelePad commands.
@@ -51,3 +53,5 @@ permissions:
         description: Permission to use the 'teledel' command.
      telepad.jump:
         description: Permission to use the 'jump' command.
+     telepad.sparkles:
+        description: Permission to have a sparkling effect on teleport.

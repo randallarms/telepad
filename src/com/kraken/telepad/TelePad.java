@@ -1,10 +1,10 @@
 // ========================================================================
-// |TELEPAD v1.4.1
+// |TELEPAD v1.4.2
 // | by Kraken | https://www.spigotmc.org/resources/telepad.34953/
 // | code inspired by various Bukkit & Spigot devs -- thank you. 
 // |
-// | Always free & open-source! If this plugin is being sold or re-branded,
-// | please let me know on the SpigotMC site, or wherever you can. Thanks!
+// | Always free & open-source! If this plugin is being 
+// | sold or re-branded, please let me know. Thanks! 
 // | Source code: https://github.com/randallarms/telepad
 // ========================================================================
 
@@ -20,19 +20,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.WeakHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.4.1";
+	public static String VERSION = "1.4.2";
 	
-	boolean opRequired = true;
-	boolean permsRequired = true;
+	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
 	File optionsFile = new File("plugins/TelePad", "options.yml");
-    FileConfiguration options = YamlConfiguration.loadConfiguration(optionsFile);
+    FileConfiguration optionsConfig = YamlConfiguration.loadConfiguration(optionsFile);
 	
 	@Override
     public void onEnable() {
@@ -42,27 +42,32 @@ public class TelePad extends JavaPlugin {
     	
 	  //Plugin start-up
 		PluginManager pm = getServer().getPluginManager();
-		TPListener listener = new TPListener();
-		pm.registerEvents(listener, this);
 
       //Checks for an options file, or creates a default version
-        if ( !options.getBoolean("loaded") ) {
-        	options.set("loaded", true);
-        	options.set("opRequired", true);
-        	options.set("permsRequired", true);
+        if ( !optionsConfig.getBoolean("loaded") ) {
+        	optionsConfig.set("loaded", true);
+        	optionsConfig.set("opRequired", true);
+        	optionsConfig.set("permsRequired", true);
+        	optionsConfig.set("sparkles", false);
         	try {
-            	options.save(optionsFile);
+        		optionsConfig.save(optionsFile);
     		} catch (IOException ioe) {
     			System.out.println("[TELEPAD] Could not properly initialize TelePad options file, expect possible errors.");
     		}
         }
 
       //Initial run options setting
-        opRequired = options.getBoolean("opRequired");
+        boolean opRequired = optionsConfig.getBoolean("opRequired");
+        options.put("opRequired", opRequired);
         getLogger().info("[TELEPAD] TelePad opRequired enabled: " + opRequired);
         
-        permsRequired = options.getBoolean("permsRequired");
+        boolean permsRequired = optionsConfig.getBoolean("permsRequired");
+        options.put("permsRequired", permsRequired);
         getLogger().info("[TELEPAD] TelePad permsRequired enabled: " + permsRequired);
+        
+      //Starts and registers the Listener
+		TPListener listener = new TPListener(this, options);
+		pm.registerEvents(listener, this);
 		
     }
     
@@ -78,23 +83,12 @@ public class TelePad extends JavaPlugin {
     	return this;
     }
     
-  //Setter for op requirement on command
-    public void setOpRequired(boolean opRequired) {
-    	this.opRequired = opRequired;
-    	options.set("opRequired", opRequired);
+  //Setter for options on command
+    public void setOption(String option, boolean value) {
+    	options.put(option, value);
+    	optionsConfig.set(option, value);
     	try {
-        	options.save(optionsFile);
-		} catch (IOException ioe) {
-			System.out.println("[TELEPAD] Could not properly set opReq, expect possible errors.");
-		}
-    }
-    
-  //Setter for permissions requirement on command
-    public void setPermsRequired(boolean permsRequired) {
-    	this.permsRequired = permsRequired;
-    	options.set("permsRequired", permsRequired);
-    	try {
-        	options.save(optionsFile);
+        	optionsConfig.save(optionsFile);
 		} catch (IOException ioe) {
 			System.out.println("[TELEPAD] Could not properly set permsReq, expect possible errors.");
 		}
@@ -107,6 +101,8 @@ public class TelePad extends JavaPlugin {
     	String command = cmd.getName();
     	Player player = Bukkit.getServer().getPlayerExact("Octopus__");
 		boolean isPlayer = false;
+		
+		boolean opRequired = options.get("opRequired");
         
       //Player commands
         if ( sender instanceof Player ) {
@@ -135,9 +131,8 @@ public class TelePad extends JavaPlugin {
     			tp.jump(player);
 		        return true;
 		    
-		  //Command: tele, tp
+		  //Command: tele
     		case "tele":
-    		case "tp":
     			
 		    	tp.teleport(player, args);
 		    	return true; 
@@ -180,13 +175,13 @@ public class TelePad extends JavaPlugin {
 	    			case "enable":
 	    			case "enabled":
 	    			case "true":
-	    				setOpRequired(true);
+	    				setOption("opRequired", true);
 	    				return true;
 	    			case "off":
 	    			case "disable":
 	    			case "disabled":
 	    			case "false":
-	    				setOpRequired(false);
+	    				setOption("opRequired", false);
 	    				return true;
 	    			default:
 	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
@@ -209,16 +204,44 @@ public class TelePad extends JavaPlugin {
 	    			case "enable":
 	    			case "enabled":
 	    			case "true":
-	    				setPermsRequired(true);
+	    				setOption("permsRequired", true);
 	    				return true;
 	    			case "off":
 	    			case "disable":
 	    			case "disabled":
 	    			case "false":
-	    				setPermsRequired(false);
+	    				setOption("permsRequired", false);
 	    				return true;
 	    			default:
 	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
+	        	    	return true;
+	        	    	
+	    		}
+	    		
+	      //Command: sparkles
+    	    case "sparkles":
+    	    	
+    	    	if ( !player.isOp() ) {
+    	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+    	    		return true;
+    	    	}
+    	    		
+	    		switch ( args[0].toLowerCase() ) {
+	    		
+	    			case "on":
+	    			case "enable":
+	    			case "enabled":
+	    			case "true":
+	    				setOption("sparkles", true);
+	    				return true;
+	    			case "off":
+	    			case "disable":
+	    			case "disabled":
+	    			case "false":
+	    				setOption("sparkles", true);
+	    				return true;
+	    			default:
+	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/sparkles <on/off>\".");
 	        	    	return true;
 	        	    	
 	    		}
