@@ -19,7 +19,7 @@ public class Teleprocessing {
   //"tele" command processing
 	public void teleport(Player player, String[] args) {
 		
-		if ( !player.hasPermission("telepad.tp") && plugin.permsRequired ) {
+		if ( !player.hasPermission("telepad.tp") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -49,7 +49,7 @@ public class Teleprocessing {
   //"teleset" command processing
 	public void teleSet(Player player, String[] args) {
 		
-		if ( !player.hasPermission("telepad.teleset") && plugin.permsRequired ) {
+		if ( !player.hasPermission("telepad.teleset") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -81,7 +81,7 @@ public class Teleprocessing {
   //"teledel" command processing
 	public void teleDelete(Player player, String[] args) {
 		
-		if ( !player.hasPermission("telepad.teledel") && plugin.permsRequired ) {
+		if ( !player.hasPermission("telepad.teledel") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -119,7 +119,7 @@ public class Teleprocessing {
   //"telelist" command processing
 	public void teleList(Player player) {
 		
-		if ( !player.hasPermission("telepad.telelist") && plugin.permsRequired ) {
+		if ( !player.hasPermission("telepad.telelist") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -149,7 +149,7 @@ public class Teleprocessing {
   //"jump" command processing
 	public void jump(Player player) {
 		
-		if ( !player.hasPermission("telepad.jump") && plugin.permsRequired ) {
+		if ( !player.hasPermission("telepad.jump") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		

@@ -22,6 +22,7 @@ public class TPListener implements Listener {
 	@EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
 		
+		//Handle sparkles for all teleports
 		boolean sparkles = options.get("sparkles");
 		
 		Location from = e.getFrom();
