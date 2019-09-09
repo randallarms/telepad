@@ -43,6 +43,7 @@ permissions:
            telepad.teleset: true
            telepad.teledel: true
            telepad.jump: true
+           telepad.sparkles: true
      telepad.tp:
         description: Permission to use the 'tele' command.
      telepad.telelist:
