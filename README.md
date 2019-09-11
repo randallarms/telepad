@@ -38,6 +38,30 @@ commands:
         description: Set the option to allow TP commands for OPs only.
         usage: /<command> <on/off>
         aliases: [permsreqtp, permsrequiredtp]
+        
+permissions:
+
+     telepad.*:
+        description: Permission for all TelePad commands.
+        children:
+           telepad.tp: true
+           telepad.telelist: true
+           telepad.teleset: true
+           telepad.teledel: true
+           telepad.jump: true
+           telepad.sparkles: true
+     telepad.tp:
+        description: Permission to use the 'tele' command.
+     telepad.telelist:
+        description: Permission to use the 'telelist' command.
+     telepad.teleset:
+        description: Permission to use the 'teleset' command.
+     telepad.teledel:
+        description: Permission to use the 'teledel' command.
+     telepad.jump:
+        description: Permission to use the 'jump' command.
+     telepad.sparkles:
+        description: Permission to have a sparkling effect on teleport.
 
 Any forks, branches, and pull requests are welcome! Please feel free to voice criticism to better the project, as well.
 
