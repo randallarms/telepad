@@ -65,6 +65,10 @@ public class TelePad extends JavaPlugin {
         options.put("permsRequired", permsRequired);
         getLogger().info("[TELEPAD] TelePad permsRequired enabled: " + permsRequired);
         
+        boolean sparkles = optionsConfig.getBoolean("sparkles");
+        options.put("sparkles", sparkles);
+        getLogger().info("[TELEPAD] TelePad sparkles enabled: " + sparkles);
+        
       //Starts and registers the Listener
 		TPListener listener = new TPListener(this, options);
 		pm.registerEvents(listener, this);
@@ -100,20 +104,26 @@ public class TelePad extends JavaPlugin {
 
     	String command = cmd.getName();
     	Player player = Bukkit.getServer().getPlayerExact("Octopus__");
-		boolean isPlayer = false;
 		
 		boolean opRequired = options.get("opRequired");
+		boolean permsRequired = options.get("permsRequired");
         
       //Player commands
         if ( sender instanceof Player ) {
+        	
         	player = (Player) sender;
-        	isPlayer = true;
+        	
+        	if ( opRequired && !player.isOp() ) {
+        		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have teleport privileges.");
+                return true;
+        	}
+        	
+        } else {
+        	
+    		System.out.println("[TP] | TelePad does not support console commands yet!");
+        	return true;
+        	
         }
-        
-    	if ( opRequired && !player.isOp() || isPlayer == false ) {
-    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have teleport privileges.");
-            return true;
-    	}
     	
     	Teleprocessing tp = new Teleprocessing(this);
     	
@@ -127,39 +137,49 @@ public class TelePad extends JavaPlugin {
     	
 		  //Command: jump
     	    case "jump":
-    			  
-    			tp.jump(player);
-		        return true;
-		    
+
+    			if (permsRequired && player.hasPermission("jump")) {
+    				tp.jump(player);
+		        	return true;
+    			}
+    			
 		  //Command: tele
     		case "tele":
+
+    			if (permsRequired && player.hasPermission("tp")) {
+    				tp.teleport(player, args);
+		    		return true; 
+    			}
     			
-		    	tp.teleport(player, args);
-		    	return true; 
-		    
 		  //Command: teledel
     		case "teledel":
     		case "teledelete":
     		case "tpdel":
     		case "tpdelete":
 		        
-		    	tp.teleDelete(player, args);
-		        return true;
+    			if (permsRequired && player.hasPermission("teledel")) {
+    				tp.teleDelete(player, args);
+		        	return true;
+    			}
 		    
 		  //Command: telelist
     		case "telelist":
     		case "tplist":
-		    	
-		    	tp.teleList(player);
-		    	return true;
-		    
+
+    			if (permsRequired && player.hasPermission("telelist")) {
+    				tp.teleList(player);
+    				return true;
+    			}
+    			
 		  //Command: teleset
     		case "teleset":
     		case "tpset":
-		        
-		    	tp.teleSet(player, args);
-		        return true;
-		        
+
+    			if (permsRequired && player.hasPermission("teleset")) {
+    				tp.teleSet(player, args);
+		        	return true;
+    			}
+    			
 		  //Command: opReqTP
     	    case "oprequiredtp":
     	    case "opreqtp":
