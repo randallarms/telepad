@@ -94,7 +94,7 @@ public class TelePad extends JavaPlugin {
     	try {
         	optionsConfig.save(optionsFile);
 		} catch (IOException ioe) {
-			System.out.println("[TELEPAD] Could not properly set permsReq, expect possible errors.");
+			System.out.println("[TELEPAD] Could not properly set option '" + option + "', expect possible errors.");
 		}
     }
     
