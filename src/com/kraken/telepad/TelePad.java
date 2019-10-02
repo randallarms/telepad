@@ -104,6 +104,7 @@ public class TelePad extends JavaPlugin {
 
     	String command = cmd.getName();
     	Player player = Bukkit.getServer().getPlayerExact("Octopus__");
+    	boolean isPlayer = false;
 		
 		boolean opRequired = options.get("opRequired");
 		boolean permsRequired = options.get("permsRequired");
@@ -112,6 +113,7 @@ public class TelePad extends JavaPlugin {
         if ( sender instanceof Player ) {
         	
         	player = (Player) sender;
+        	isPlayer = true;
         	
         	if ( opRequired && !player.isOp() ) {
         		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have teleport privileges.");
@@ -132,13 +134,15 @@ public class TelePad extends JavaPlugin {
     	  //Command: telepad
     		case "telepad":
 			  
-    			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ")");
+    			if (isPlayer) {
+    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ")");
+    			}
     			return true;
     	
 		  //Command: jump
     	    case "jump":
 
-    			if (permsRequired && player.hasPermission("jump")) {
+    			if (permsRequired && player.hasPermission("jump") && isPlayer) {
     				tp.jump(player);
 		        	return true;
     			}
@@ -146,7 +150,7 @@ public class TelePad extends JavaPlugin {
 		  //Command: tele
     		case "tele":
 
-    			if (permsRequired && player.hasPermission("tp")) {
+    			if (permsRequired && player.hasPermission("tp") && isPlayer) {
     				tp.teleport(player, args);
 		    		return true; 
     			}
@@ -184,7 +188,7 @@ public class TelePad extends JavaPlugin {
     	    case "oprequiredtp":
     	    case "opreqtp":
     	    		
-    	    	if ( !player.isOp() ) {
+    	    	if ( isPlayer && !player.isOp() ) {
     	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
     	    		return true;
     	    	}
@@ -213,7 +217,7 @@ public class TelePad extends JavaPlugin {
     	    case "permsrequiredtp":
     	    case "permsreqtp":
     	    	
-    	    	if ( !player.isOp() ) {
+    	    	if ( isPlayer && !player.isOp() ) {
     	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
     	    		return true;
     	    	}
@@ -241,7 +245,7 @@ public class TelePad extends JavaPlugin {
 	      //Command: sparkles
     	    case "sparkles":
     	    	
-    	    	if ( !player.isOp() ) {
+    	    	if ( isPlayer && !player.isOp() ) {
     	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
     	    		return true;
     	    	}
@@ -268,8 +272,12 @@ public class TelePad extends JavaPlugin {
 		        
 	      //Command not recognized
 		    default:
-		    	  
-		        player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Command not recognized.");
+		    	
+		    	if (isPlayer) {
+		    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Command not recognized.");
+		    	} else {
+		    		System.out.println("[TELEPAD] Command not recognized.");
+		    	}
 		        return true;
 		    
         }
