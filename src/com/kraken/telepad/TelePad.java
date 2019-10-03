@@ -122,8 +122,20 @@ public class TelePad extends JavaPlugin {
         	
         } else {
         	
-    		System.out.println("[TP] | TelePad does not support console commands yet!");
-        	return true;
+        	switch ( command.toLowerCase() ) {
+        		case "jump":
+        		case "tele":
+        		case "teledel":
+        		case "teledelete":
+        		case "tpdel":
+        		case "tpdelete":
+        		case "telelist":
+        		case "tplist":
+        		case "teleset":
+        		case "tpset":
+	    			System.out.println("[TELEPAD] | This is a player-only command, or TelePad does not support these console commands yet!");
+	        		return true;
+        	}
         	
         }
     	
@@ -136,6 +148,8 @@ public class TelePad extends JavaPlugin {
 			  
     			if (isPlayer) {
     				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ")");
+    			} else {
+    				System.out.println("[TELEPAD] | TelePad | Teleports & warps plugin (" + VERSION + ")");
     			}
     			return true;
     	
@@ -208,7 +222,11 @@ public class TelePad extends JavaPlugin {
 	    				setOption("opRequired", false);
 	    				return true;
 	    			default:
-	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
+	    				if (isPlayer) {
+	    					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
+	    				} else {
+	    					System.out.println("[TELEPAD] | Try entering \"/opReqTP <on/off>\".");
+	    				}
 	        	    	return true;
 	        	    	
 	    		}
@@ -237,7 +255,11 @@ public class TelePad extends JavaPlugin {
 	    				setOption("permsRequired", false);
 	    				return true;
 	    			default:
-	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
+	    				if (isPlayer) {
+		    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
+	    				} else {
+	    					System.out.println("[TELEPAD] | Try entering \"/permsReqTP <on/off>\".");
+	    				}
 	        	    	return true;
 	        	    	
 	    		}
@@ -265,7 +287,11 @@ public class TelePad extends JavaPlugin {
 	    				setOption("sparkles", true);
 	    				return true;
 	    			default:
-	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/sparkles <on/off>\".");
+	    				if (isPlayer) {
+		    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/sparkles <on/off>\".");
+	    				} else {
+	    					System.out.println("[TELEPAD] | Try entering \"/sparkles <on/off>\".");
+	    				}
 	        	    	return true;
 	        	    	
 	    		}
