@@ -125,10 +125,6 @@ public class TelePad extends JavaPlugin {
         	switch ( command.toLowerCase() ) {
         		case "jump":
         		case "tele":
-        		case "teledel":
-        		case "teledelete":
-        		case "tpdel":
-        		case "tpdelete":
         		case "telelist":
         		case "tplist":
         		case "teleset":
@@ -175,8 +171,8 @@ public class TelePad extends JavaPlugin {
     		case "tpdel":
     		case "tpdelete":
 		        
-    			if (permsRequired && player.hasPermission("teledel")) {
-    				tp.teleDelete(player, args);
+    			if ( (permsRequired && isPlayer && player.hasPermission("teledel")) || !isPlayer ) {
+    				tp.teleDelete(isPlayer, player, args);
 		        	return true;
     			}
 		    

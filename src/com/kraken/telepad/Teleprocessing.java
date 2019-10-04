@@ -79,14 +79,18 @@ public class Teleprocessing {
 	}
 	
   //"teledel" command processing
-	public void teleDelete(Player player, String[] args) {
+	public void teleDelete(boolean isPlayer, Player player, String[] args) {
 		
-		if ( !player.hasPermission("telepad.teledel") && plugin.options.get("permsRequired") ) {
+		if ( isPlayer && !player.hasPermission("telepad.teledel") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
 		if (args.length == 0 || args.length < 1) {
-	    	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teledel <name>");
+			if (isPlayer) {
+				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teledel <name>");
+			} else {
+				System.out.println("[TELEPAD] | Incorrect format. Please use: \"/teledel <name>\"");
+			}
 	    } else {
 	    	
 			String teleName = new String("teleName not properly set");
@@ -103,13 +107,25 @@ public class Teleprocessing {
 	    			plugin.getConfig().set(teleName, null);
 					plugin.saveConfig();
 					if (!plugin.getConfig().contains(teleName)) {
-						player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " deleted.");
+						if (isPlayer) {
+							player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " deleted.");
+						} else {
+							System.out.println("[TELEPAD] | Teleport \"" + args[0] + "\" was successfully deleted.");
+						}
 					} else {
-						player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " deleted.");
+						if (isPlayer) {
+							player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " deleted.");
+						} else {
+							System.out.println("[TELEPAD] | Teleport \"" + args[0] + "\" was not deleted.");
+						}
 					}
 	    	
 	    	} else {
-	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport name \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
+	    		if (isPlayer) {
+	    			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport name \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
+	    		}  else {
+					System.out.println("[TELEPAD] | Teleport name \"" + args[0] + "\" was not found.");
+				}
 	    	}
 	    	
 	    }
