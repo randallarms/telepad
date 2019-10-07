@@ -133,9 +133,9 @@ public class Teleprocessing {
 	}
 	
   //"telelist" command processing
-	public void teleList(Player player) {
+	public void teleList(boolean isPlayer, Player player) {
 		
-		if ( !player.hasPermission("telepad.telelist") && plugin.options.get("permsRequired") ) {
+		if ( isPlayer && !player.hasPermission("telepad.telelist") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -151,14 +151,22 @@ public class Teleprocessing {
     		String teleName = key;    		
     		teleListLength++;
     		if (teleListLength == telesLength) {
-    			teleList+= teleName;
+    			teleList += teleName;
     		} else {
-    			teleList+= teleName + ChatColor.GRAY + ", " + ChatColor.GREEN;
+    			if (isPlayer) {
+    				teleList += teleName + ChatColor.GRAY + ", " + ChatColor.GREEN;
+    			} else {
+    				teleList += teleName + ", ";
+    			}
     		}
     		
     	}
     	
-    	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Here is a list of teleports:\n" + ChatColor.GREEN + teleList);
+    	if (isPlayer) {
+    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Here is a list of teleports:\n" + ChatColor.GREEN + teleList);
+    	} else {
+    		System.out.println("[TELEPAD] | Here is a list of teleports: " + teleList);
+    	}
 		
 	}
 	

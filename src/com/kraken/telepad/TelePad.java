@@ -1,7 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.4.2
-// | by Kraken | https://www.spigotmc.org/resources/telepad.34953/
-// | code inspired by various Bukkit & Spigot devs -- thank you. 
+// |TELEPAD v1.4.3.2
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -27,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.4.2";
+	public static String VERSION = "1.4.3.2";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -125,8 +123,6 @@ public class TelePad extends JavaPlugin {
         	switch ( command.toLowerCase() ) {
         		case "jump":
         		case "tele":
-        		case "telelist":
-        		case "tplist":
         		case "teleset":
         		case "tpset":
 	    			System.out.println("[TELEPAD] | This is a player-only command, or TelePad does not support these console commands yet!");
@@ -181,7 +177,7 @@ public class TelePad extends JavaPlugin {
     		case "tplist":
 
     			if (permsRequired && player.hasPermission("telelist")) {
-    				tp.teleList(player);
+    				tp.teleList(isPlayer, player);
     				return true;
     			}
     			
