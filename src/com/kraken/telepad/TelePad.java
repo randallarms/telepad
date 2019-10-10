@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.4.3.3
+// |TELEPAD v1.4.3.4
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.4.3.3";
+	public static String VERSION = "1.4.3.4";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -141,7 +141,7 @@ public class TelePad extends JavaPlugin {
     			if (isPlayer) {
     				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ")");
     			} else {
-    				System.out.println("[TELEPAD] | TelePad | Teleports & warps plugin (" + VERSION + ")");
+    				System.out.println("[TELEPAD] | TelePad | Teleports & warps plugin (v" + VERSION + ")");
     			}
     			return true;
     	
