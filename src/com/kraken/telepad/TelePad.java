@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.4.3.4
+// |TELEPAD v1.4.3.5
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.4.3.4";
+	public static String VERSION = "1.4.3.5";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -114,7 +114,7 @@ public class TelePad extends JavaPlugin {
         	isPlayer = true;
         	
         	if ( opRequired && !player.isOp() ) {
-        		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have teleport privileges.");
+        		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "You do not have the required 'op' permission level required.");
                 return true;
         	}
         	
