@@ -4,6 +4,8 @@ Simple custom warp & teleportation plugin for Bukkit on Minecraft (MCv1.12).
 
 TelePad features the ability to travel between locations and worlds via simple command. The plugin has no dependencies and will likely have no effect on any other plugins already installed, even other teleport plugins! Always back-up to be sure, though.
 
+DOWNLOAD (plugin JAR file): https://github.com/randallarms/telepad/blob/master/resources/jar/TelePad.jar
+
 Config file for custom configurations can be found in the "options.yml" file generated after the first time loading TelePad on a server. Changing the values in this file may change how your server works, so please be sure to back up any server data before editing the config.
 
 Now supporting console commands!
