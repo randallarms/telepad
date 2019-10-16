@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.4.3.5
+// |TELEPAD v1.4.4
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.4.3.5";
+	public static String VERSION = "1.4.4";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -36,7 +36,7 @@ public class TelePad extends JavaPlugin {
     public void onEnable() {
 		
 	  //Welcome
-		getLogger().info("[TELEPAD] TelePad enabling...");
+		getLogger().info("TelePad enabling...");
     	
 	  //Plugin start-up
 		PluginManager pm = getServer().getPluginManager();
@@ -50,22 +50,22 @@ public class TelePad extends JavaPlugin {
         	try {
         		optionsConfig.save(optionsFile);
     		} catch (IOException ioe) {
-    			System.out.println("[TELEPAD] Could not properly initialize TelePad options file, expect possible errors.");
+    			System.out.println("Could not properly initialize TelePad options file, expect possible errors.");
     		}
         }
 
       //Initial run options setting
         boolean opRequired = optionsConfig.getBoolean("opRequired");
         options.put("opRequired", opRequired);
-        getLogger().info("[TELEPAD] TelePad opRequired enabled: " + opRequired);
+        getLogger().info("TelePad opRequired enabled: " + opRequired);
         
         boolean permsRequired = optionsConfig.getBoolean("permsRequired");
         options.put("permsRequired", permsRequired);
-        getLogger().info("[TELEPAD] TelePad permsRequired enabled: " + permsRequired);
+        getLogger().info("TelePad permsRequired enabled: " + permsRequired);
         
         boolean sparkles = optionsConfig.getBoolean("sparkles");
         options.put("sparkles", sparkles);
-        getLogger().info("[TELEPAD] TelePad sparkles enabled: " + sparkles);
+        getLogger().info("TelePad sparkles enabled: " + sparkles);
         
       //Starts and registers the Listener
 		TPListener listener = new TPListener(this, options);
@@ -77,7 +77,7 @@ public class TelePad extends JavaPlugin {
     public void onDisable() {
     	
       //Salutations
-        getLogger().info("[TELEPAD] TelePad disabling...");
+        getLogger().info("TelePad disabling...");
         
     }
     
@@ -87,13 +87,16 @@ public class TelePad extends JavaPlugin {
     
   //Setter for options on command
     public void setOption(String option, boolean value) {
+    	
     	options.put(option, value);
     	optionsConfig.set(option, value);
+    	
     	try {
         	optionsConfig.save(optionsFile);
 		} catch (IOException ioe) {
-			System.out.println("[TELEPAD] Could not properly set option '" + option + "', expect possible errors.");
+			System.out.println("Could not properly set option '" + option + "', expect possible errors.");
 		}
+    	
     }
     
   //TelePad commands
@@ -125,7 +128,7 @@ public class TelePad extends JavaPlugin {
         		case "tele":
         		case "teleset":
         		case "tpset":
-	    			System.out.println("[TELEPAD] | This is a player-only command, or TelePad does not support these console commands yet!");
+	    			System.out.println("This is a player-only command, or TelePad does not support these console commands yet!");
 	        		return true;
         	}
         	
@@ -141,7 +144,7 @@ public class TelePad extends JavaPlugin {
     			if (isPlayer) {
     				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ")");
     			} else {
-    				System.out.println("[TELEPAD] | TelePad | Teleports & warps plugin (v" + VERSION + ")");
+    				System.out.println("TelePad | Teleports & warps plugin (v" + VERSION + ")");
     			}
     			return true;
     	
@@ -217,7 +220,7 @@ public class TelePad extends JavaPlugin {
 	    				if (isPlayer) {
 	    					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
 	    				} else {
-	    					System.out.println("[TELEPAD] | Try entering \"/opReqTP <on/off>\".");
+	    					System.out.println("Try entering \"/opReqTP <on/off>\".");
 	    				}
 	        	    	return true;
 	        	    	
@@ -250,7 +253,7 @@ public class TelePad extends JavaPlugin {
 	    				if (isPlayer) {
 		    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
 	    				} else {
-	    					System.out.println("[TELEPAD] | Try entering \"/permsReqTP <on/off>\".");
+	    					System.out.println("Try entering \"/permsReqTP <on/off>\".");
 	    				}
 	        	    	return true;
 	        	    	
@@ -282,7 +285,7 @@ public class TelePad extends JavaPlugin {
 	    				if (isPlayer) {
 		    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/sparkles <on/off>\".");
 	    				} else {
-	    					System.out.println("[TELEPAD] | Try entering \"/sparkles <on/off>\".");
+	    					System.out.println("Try entering \"/sparkles <on/off>\".");
 	    				}
 	        	    	return true;
 	        	    	
@@ -294,7 +297,7 @@ public class TelePad extends JavaPlugin {
 		    	if (isPlayer) {
 		    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Command not recognized.");
 		    	} else {
-		    		System.out.println("[TELEPAD] Command not recognized.");
+		    		System.out.println("Command not recognized.");
 		    	}
 		        return true;
 		    

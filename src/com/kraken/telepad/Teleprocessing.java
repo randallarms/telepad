@@ -89,7 +89,7 @@ public class Teleprocessing {
 			if (isPlayer) {
 				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teledel <name>");
 			} else {
-				System.out.println("[TELEPAD] | Incorrect format. Please use: \"/teledel <name>\"");
+				System.out.println("Incorrect format. Please use: \"/teledel <name>\"");
 			}
 	    } else {
 	    	
@@ -110,13 +110,13 @@ public class Teleprocessing {
 						if (isPlayer) {
 							player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " deleted.");
 						} else {
-							System.out.println("[TELEPAD] | Teleport \"" + args[0] + "\" was successfully deleted.");
+							System.out.println("Teleport \"" + args[0] + "\" was successfully deleted.");
 						}
 					} else {
 						if (isPlayer) {
 							player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " deleted.");
 						} else {
-							System.out.println("[TELEPAD] | Teleport \"" + args[0] + "\" was not deleted.");
+							System.out.println("Teleport \"" + args[0] + "\" was not deleted.");
 						}
 					}
 	    	
@@ -124,7 +124,7 @@ public class Teleprocessing {
 	    		if (isPlayer) {
 	    			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport name \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
 	    		}  else {
-					System.out.println("[TELEPAD] | Teleport name \"" + args[0] + "\" was not found.");
+					System.out.println("Teleport name \"" + args[0] + "\" was not found.");
 				}
 	    	}
 	    	
@@ -165,7 +165,7 @@ public class Teleprocessing {
     	if (isPlayer) {
     		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Here is a list of teleports:\n" + ChatColor.GREEN + teleList);
     	} else {
-    		System.out.println("[TELEPAD] | Here is a list of teleports: " + teleList);
+    		System.out.println("Here is a list of teleports: " + teleList);
     	}
 		
 	}
