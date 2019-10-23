@@ -42,7 +42,10 @@ commands:
         description: Set the option to allow TP commands for OPs only.
         usage: /<command> <on/off>
         aliases: [permsreqtp, permsrequiredtp]
-        
+     sparkles:
+        description: Set the option to allow sparkle effects for teleports.
+        usage: /<command> <on/off>
+		
 permissions:
 
      telepad.*:
