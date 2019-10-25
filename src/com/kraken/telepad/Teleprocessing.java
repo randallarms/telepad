@@ -2,9 +2,11 @@ package com.kraken.telepad;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class Teleprocessing {
@@ -54,7 +56,7 @@ public class Teleprocessing {
 		}
 		
 		if (args.length == 0 || args.length > 1) {
-        	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleset <name> (with 3 characters or more in the name)");
+        	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleset <name>");
         } else {
         	
         	String teleName = new String(args[0]);
@@ -62,18 +64,79 @@ public class Teleprocessing {
         	
         	if (!plugin.getConfig().contains(teleName)) {
 
-        			plugin.getConfig().set(teleName, LocSerialization.getStringFromLocation(location));
-        			plugin.saveConfig();
-					if (plugin.getConfig().contains(teleName)) {
-						player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " created.");
-					} else {
-						player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " created.");
-					}
+    			plugin.getConfig().set(teleName, LocSerialization.getStringFromLocation(location));
+    			plugin.saveConfig();
+    			
+				if (plugin.getConfig().contains(teleName)) {
+					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " created.");
+				} else {
+					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " created.");
+				}
         	
         	} else {
         		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport name \"" + teleName + "\" is " + ChatColor.RED + "already in use" + ChatColor.GRAY + "!");
         	}
         	
+        }
+		
+	}
+	
+  //"teleset" console command processing
+	public void teleSetConsole(String[] args) {
+		
+		if (args.length == 5) {
+			
+			//Get teleport name
+			String teleName = new String(args[0]);
+			
+			//Create default placeholder variables
+			World world = Bukkit.getServer().getWorlds().get(0);
+			Location location = new Location(world, 0, 0, 0);
+			double xCoord = 0;
+			double yCoord = 0;
+			double zCoord = 0;
+			
+			//Try to parse world name
+			try {
+				world = Bukkit.getServer().getWorld(args[1]);
+			} catch (NullPointerException e) {
+				System.out.println("World name not found!");
+				return;
+			}
+        	
+			//Try to parse coordinates
+        	try {
+    			xCoord = Double.parseDouble(args[2]);
+    			yCoord = Double.parseDouble(args[3]);
+    			zCoord = Double.parseDouble(args[4]);
+        	} catch (NumberFormatException e) {
+				System.out.println("Coordinates must be numeric!");
+				return;
+        	}
+        	
+        	//Set location
+        	location = new Location(world, xCoord, yCoord, zCoord);
+        	
+        	//Create teleport if name not already taken
+        	if ( !plugin.getConfig().contains(teleName) ) {
+
+    			//Set teleport to config
+    			plugin.getConfig().set( teleName, LocSerialization.getStringFromLocation(location) );
+    			plugin.saveConfig();
+    			
+    			//Check if teleport was successfully created
+				if (plugin.getConfig().contains(teleName)) {
+					System.out.println("Teleport \"" + teleName + "\" was successfully created.");
+				} else {
+					System.out.println("Teleport \"" + teleName + "\" was not created.");
+				}
+        	
+        	} else {
+        		System.out.println("Teleport name \"" + teleName + "\" is already in use!");
+        	}
+        	
+        } else {
+        	System.out.println("Incorrect format. Please use: /teleset <teleName> <worldName> <x-coord> <y-coord> <z-coord>");
         }
 		
 	}

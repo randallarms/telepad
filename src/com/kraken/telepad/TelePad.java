@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.4.4
+// |TELEPAD v1.5
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.4.4";
+	public static String VERSION = "1.5";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -188,9 +188,14 @@ public class TelePad extends JavaPlugin {
     		case "teleset":
     		case "tpset":
 
-    			if (permsRequired && player.hasPermission("teleset")) {
-    				tp.teleSet(player, args);
-		        	return true;
+    			if (isPlayer) {
+    				if (permsRequired && player.hasPermission("teleset")) {
+	    				tp.teleSet(player, args);
+			        	return true;
+	    			}
+    			} else {
+    				tp.teleSetConsole(args);
+    				return true;
     			}
     			
 		  //Command: opReqTP
