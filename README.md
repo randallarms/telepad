@@ -6,7 +6,7 @@ TelePad features the ability to travel between locations and worlds via simple c
 
 DOWNLOAD (plugin JAR file): https://github.com/randallarms/telepad/blob/master/resources/jar/TelePad.jar
 
-Config file for custom configurations can be found in the "options.yml" file generated after the first time loading TelePad on a server. Changing the values in this file may change how your server works, so please be sure to back up any server data before editing the config. To reset the config file, simply delete it while the server is off, and then restart your server. A new file should be generated.
+The custom options file can be found in the "options.yml" file generated after the first time loading TelePad on a server. Changing the values in this file may change how your server works, so please be sure to back up any server data before editing the options. To reset the options file or the config file, simply delete it while the server is off, and then restart your server. A new file should be generated.
 
 Now supporting console commands!
 
