@@ -8,7 +8,7 @@ DOWNLOAD (plugin JAR file): https://github.com/randallarms/telepad/blob/master/r
 
 The custom options file can be found in the "options.yml" file generated after the first time loading TelePad on a server. Changing the values in this file may change how your server works, so please be sure to back up any server data before editing the options. To reset the options file or the config file, simply delete it while the server is off, and then restart your server. A new file should be generated.
 
-Now supporting console commands!
+Now supporting console commands: "telepad", "teledel", "telelist", "teleset", "opReqTP", "permsReqTP", "sparkles".
 
 commands: 
 
