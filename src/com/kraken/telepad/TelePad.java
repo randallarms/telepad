@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5
+// |TELEPAD v1.5.1
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5";
+	public static String VERSION = "1.5.1";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -126,8 +126,6 @@ public class TelePad extends JavaPlugin {
         	switch ( command.toLowerCase() ) {
         		case "jump":
         		case "tele":
-        		case "teleset":
-        		case "tpset":
 	    			System.out.println("This is a player-only command, or TelePad does not support these console commands yet!");
 	        		return true;
         	}
