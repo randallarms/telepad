@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.1
+// |TELEPAD v1.5.1.1
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.1";
+	public static String VERSION = "1.5.1.1";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -104,7 +104,7 @@ public class TelePad extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
     	String command = cmd.getName();
-    	Player player = Bukkit.getServer().getPlayerExact("Octopus__");
+    	Player player = Bukkit.getServer().getPlayerExact("Octopus__"); //Placeholder player; only used if isPlayer
     	boolean isPlayer = false;
 		
 		boolean opRequired = options.get("opRequired");
@@ -140,9 +140,9 @@ public class TelePad extends JavaPlugin {
     		case "telepad":
 			  
     			if (isPlayer) {
-    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ")");
+    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | TelePad | Teleports & warps plugin (" + VERSION + ") | More info @ github.com/randallarms/telepad");
     			} else {
-    				System.out.println("TelePad | Teleports & warps plugin (v" + VERSION + ")");
+    				System.out.println("TelePad | Teleports & warps plugin (v" + VERSION + ") | More info @ github.com/randallarms/telepad");
     			}
     			return true;
     	
