@@ -42,8 +42,51 @@ public class Teleprocessing {
     		} else {
         		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport " + args[0] + " was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");        			
     		}
+    		
+    		return;
+    		
     	} else {
     		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/tele <name>");
+    	}
+		
+	}
+	
+  //"teleother" command processing
+	@SuppressWarnings("deprecation")
+	public void teleOther(Player player, String[] args) {
+		
+		if ( !player.hasPermission("telepad.teleother") && plugin.options.get("permsRequired") ) {
+			return;
+		}
+		
+		boolean targetFound = Bukkit.getServer().getOnlinePlayers().contains(Bukkit.getServer().getPlayerExact(args[0]));
+		
+		if (args.length > 2 || args.length < 1) {
+    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleother <player> {go/bring}");
+    		return;
+    	}
+    		
+    	if (targetFound) {
+
+    		Player target = player.getServer().getPlayerExact(args[0]);
+    		
+    		if (args.length == 1) {
+    			//Bring teleport
+    			target.teleport(player.getLocation());
+    		} else if (args[1].equalsIgnoreCase("go")) {
+    			//Go teleport
+    			player.teleport(target.getLocation());
+    		} else if (args[1].equalsIgnoreCase("bring")) {
+    			//Bring teleport
+    			target.teleport(player.getLocation());
+    		} else {
+    			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleother <player> {go/bring}");
+    		}
+    		
+    		return;
+    		
+    	} else {
+    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Player " + args[0] + " was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
     	}
 		
 	}

@@ -19,6 +19,9 @@ commands:
         description: Teleport to a set location.
         usage: /<command> <name>
         aliases: [tp]
+	 teleother:
+	    description: Teleport another (go to, bring to).
+		usage: /<command> <player> <go/bring>
      jump:
         description: Jump a short (~< 100m) distance.
         usage: /<command>
@@ -52,6 +55,7 @@ permissions:
         description: Permission for all TelePad commands.
         children:
            telepad.tp: true
+		   telepad.teleother: true
            telepad.telelist: true
            telepad.teleset: true
            telepad.teledel: true
@@ -59,6 +63,8 @@ permissions:
            telepad.sparkles: true
      telepad.tp:
         description: Permission to use the 'tele' command.
+     telepad.teleother:
+        description: Permission to use the 'teleother' command.
      telepad.telelist:
         description: Permission to use the 'telelist' command.
      telepad.teleset:
