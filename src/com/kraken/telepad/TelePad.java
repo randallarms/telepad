@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.2
+// |TELEPAD v1.5.2.1
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.2";
+	public static String VERSION = "1.5.2.1";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -55,17 +55,11 @@ public class TelePad extends JavaPlugin {
         }
 
       //Initial run options setting
-        boolean opRequired = optionsConfig.getBoolean("opRequired");
-        options.put("opRequired", opRequired);
-        getLogger().info("TelePad opRequired enabled: " + opRequired);
-        
-        boolean permsRequired = optionsConfig.getBoolean("permsRequired");
-        options.put("permsRequired", permsRequired);
-        getLogger().info("TelePad permsRequired enabled: " + permsRequired);
-        
-        boolean sparkles = optionsConfig.getBoolean("sparkles");
-        options.put("sparkles", sparkles);
-        getLogger().info("TelePad sparkles enabled: " + sparkles);
+        for ( String option : optionsConfig.getKeys(false) ) {
+        	boolean value = optionsConfig.getBoolean(option);
+	        options.put(option, value);
+	        getLogger().info("TelePad " + option + " enabled: " + value);
+        }
         
       //Starts and registers the Listener
 		TPListener listener = new TPListener(this, options);
@@ -94,7 +88,7 @@ public class TelePad extends JavaPlugin {
     	try {
         	optionsConfig.save(optionsFile);
 		} catch (IOException ioe) {
-			System.out.println("Could not properly set option '" + option + "', expect possible errors.");
+			System.out.println("TelePad could not properly set option '" + option + "', expect possible errors.");
 		}
     	
     }
