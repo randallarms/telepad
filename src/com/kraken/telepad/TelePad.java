@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.2.1
+// |TELEPAD v1.5.2.2
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -25,7 +25,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.2.1";
+	public static String VERSION = "1.5.2.2";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -42,17 +42,7 @@ public class TelePad extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 
       //Checks for an options file, or creates a default version
-        if ( !optionsConfig.getBoolean("loaded") ) {
-        	optionsConfig.set("loaded", true);
-        	optionsConfig.set("opRequired", true);
-        	optionsConfig.set("permsRequired", true);
-        	optionsConfig.set("sparkles", false);
-        	try {
-        		optionsConfig.save(optionsFile);
-    		} catch (IOException ioe) {
-    			System.out.println("Could not properly initialize TelePad options file, expect possible errors.");
-    		}
-        }
+		saveResource("options.yml", false);
 
       //Initial run options setting
         for ( String option : optionsConfig.getKeys(false) ) {
