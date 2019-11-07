@@ -1,6 +1,6 @@
 name: TelePad
 main: com.kraken.telepad.TelePad
-version: 1.5.2.2 (release)
+version: 1.5.2.3 (release)
 commands: 
      telepad:
         description: Info on the TelePad plugin.
@@ -34,7 +34,7 @@ commands:
         description: Set the option to allow TP commands for OPs only.
         usage: /<command> <on/off>
         aliases: [permsreqtp, permsrequiredtp]
-     sparkles:
+     sparklesTP:
         description: Set the option to allow sparkle effects for teleports.
         usage: /<command> <on/off>
 permissions:

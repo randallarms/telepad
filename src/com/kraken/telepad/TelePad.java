@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.2.2
+// |TELEPAD v1.5.2.3
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -13,11 +13,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.WeakHashMap;
 
 import org.bukkit.Bukkit;
@@ -25,7 +26,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.2.2";
+	public static String VERSION = "1.5.2.3";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -37,9 +38,6 @@ public class TelePad extends JavaPlugin {
 		
 	  //Welcome
 		getLogger().info("TelePad enabling...");
-    	
-	  //Plugin start-up
-		PluginManager pm = getServer().getPluginManager();
 
       //Checks for an options file, or creates a default version
 		saveResource("options.yml", false);
@@ -50,10 +48,6 @@ public class TelePad extends JavaPlugin {
 	        options.put(option, value);
 	        getLogger().info("TelePad " + option + " enabled: " + value);
         }
-        
-      //Starts and registers the Listener
-		TPListener listener = new TPListener(this, options);
-		pm.registerEvents(listener, this);
 		
     }
     
@@ -118,6 +112,30 @@ public class TelePad extends JavaPlugin {
     	
     	Teleprocessing tp = new Teleprocessing(this);
     	
+    	//Check for enable/disable arguments
+    	boolean enableArg = false;
+    	boolean disableArg = false;
+    	
+    	if (args.length > 0) {
+    		
+	    	List<String> enableArgs = new ArrayList<String>();
+	    	enableArgs.add("on");
+	    	enableArgs.add("enable");
+	    	enableArgs.add("enabled");
+	    	enableArgs.add("true");
+	    	
+	    	List<String> disableArgs = new ArrayList<String>();
+	    	disableArgs.add("off");
+	    	disableArgs.add("disable");
+	    	disableArgs.add("disabled");
+	    	disableArgs.add("false");
+	    	
+	    	enableArg = enableArgs.contains(args[0].toLowerCase());
+	    	disableArg = disableArgs.contains(args[0].toLowerCase());
+	    	
+    	}
+    	
+    	//Execute the command
     	switch ( command.toLowerCase() ) {
     	
     	  //Command: telepad
@@ -197,29 +215,20 @@ public class TelePad extends JavaPlugin {
     	    		return true;
     	    	}
     	    	
-	    		switch ( args[0].toLowerCase() ) {
-	    		
-	    			case "on":
-	    			case "enable":
-	    			case "enabled":
-	    			case "true":
-	    				setOption("opRequired", true);
-	    				return true;
-	    			case "off":
-	    			case "disable":
-	    			case "disabled":
-	    			case "false":
-	    				setOption("opRequired", false);
-	    				return true;
-	    			default:
-	    				if (isPlayer) {
-	    					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
-	    				} else {
-	    					System.out.println("Try entering \"/opReqTP <on/off>\".");
-	    				}
-	        	    	return true;
-	        	    	
-	    		}
+    	    	if (enableArg) {
+    				setOption("opRequired", true);
+    				return true;
+    	    	} else if (disableArg) {
+    				setOption("opRequired", false);
+    				return true;
+    	    	} else {
+    				if (isPlayer) {
+    					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
+    				} else {
+    					System.out.println("Try entering \"/opReqTP <on/off>\".");
+    				}
+        	    	return true;
+    	    	}
 	    		
 		  //Command: permsReqTP
     	    case "permsrequiredtp":
@@ -229,62 +238,44 @@ public class TelePad extends JavaPlugin {
     	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
     	    		return true;
     	    	}
-    	    		
-	    		switch ( args[0].toLowerCase() ) {
-	    		
-	    			case "on":
-	    			case "enable":
-	    			case "enabled":
-	    			case "true":
-	    				setOption("permsRequired", true);
-	    				return true;
-	    			case "off":
-	    			case "disable":
-	    			case "disabled":
-	    			case "false":
-	    				setOption("permsRequired", false);
-	    				return true;
-	    			default:
-	    				if (isPlayer) {
-		    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
-	    				} else {
-	    					System.out.println("Try entering \"/permsReqTP <on/off>\".");
-	    				}
-	        	    	return true;
-	        	    	
-	    		}
+    	    	
+    	    	if (enableArg) {
+    				setOption("permsRequired", true);
+    				return true;
+    	    	} else if (disableArg) {
+    				setOption("permsRequired", false);
+    				return true;
+    	    	} else {
+    				if (isPlayer) {
+	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
+    				} else {
+    					System.out.println("Try entering \"/permsReqTP <on/off>\".");
+    				}
+        	    	return true;
+    	    	}
 	    		
 	      //Command: sparkles
-    	    case "sparkles":
+    	    case "sparklestp":
     	    	
     	    	if ( isPlayer && !player.isOp() ) {
     	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
     	    		return true;
     	    	}
-    	    		
-	    		switch ( args[0].toLowerCase() ) {
-	    		
-	    			case "on":
-	    			case "enable":
-	    			case "enabled":
-	    			case "true":
-	    				setOption("sparkles", true);
-	    				return true;
-	    			case "off":
-	    			case "disable":
-	    			case "disabled":
-	    			case "false":
-	    				setOption("sparkles", true);
-	    				return true;
-	    			default:
-	    				if (isPlayer) {
-		    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/sparkles <on/off>\".");
-	    				} else {
-	    					System.out.println("Try entering \"/sparkles <on/off>\".");
-	    				}
-	        	    	return true;
-	        	    	
-	    		}
+    	    	
+    	    	if (enableArg) {
+    				setOption("sparkles", true);
+    				return true;
+    	    	} else if (disableArg) {
+    				setOption("sparkles", false);
+    				return true;
+    	    	} else {
+    				if (isPlayer) {
+	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/sparklesTP <on/off>\".");
+    				} else {
+    					System.out.println("Try entering \"/sparklesTP <on/off>\".");
+    				}
+        	    	return true;
+    	    	}
 		        
 	      //Command not recognized
 		    default:
