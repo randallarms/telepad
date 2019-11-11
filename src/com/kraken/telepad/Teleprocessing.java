@@ -99,26 +99,35 @@ public class Teleprocessing {
 		}
 		
 		if (args.length == 0 || args.length > 1) {
+			
         	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleset <name>");
+        	return;
+        	
         } else {
         	
         	String teleName = new String(args[0]);
         	Location location = player.getLocation();
         	
+        	//Set teleport to config
         	if (!plugin.getConfig().contains(teleName)) {
 
     			plugin.getConfig().set(teleName, LocSerialization.getStringFromLocation(location));
     			plugin.saveConfig();
     			
+    			//Check for successful teleport creation
+    			String successTxt = ChatColor.RED + "not";
 				if (plugin.getConfig().contains(teleName)) {
-					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " created.");
-				} else {
-					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " created.");
+					successTxt = ChatColor.GREEN + "successfully";
 				}
+				
+				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + successTxt + ChatColor.GRAY + " created.");
+				return;
         	
         	} else {
         		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport name \"" + teleName + "\" is " + ChatColor.RED + "already in use" + ChatColor.GRAY + "!");
         	}
+        	
+        	return;
         	
         }
 		
@@ -168,18 +177,23 @@ public class Teleprocessing {
     			plugin.saveConfig();
     			
     			//Check if teleport was successfully created
+    			String successTxt = "not";
+    			
 				if (plugin.getConfig().contains(teleName)) {
-					System.out.println("Teleport \"" + teleName + "\" was successfully created.");
-				} else {
-					System.out.println("Teleport \"" + teleName + "\" was not created.");
+					successTxt = "successfully";
 				}
+				
+				System.out.println("Teleport \"" + teleName + "\" was " + successTxt + " created.");
+				return;
         	
         	} else {
         		System.out.println("Teleport name \"" + teleName + "\" is already in use!");
+        		return;
         	}
         	
         } else {
         	System.out.println("Incorrect format. Please use: /teleset <teleName> <worldName> <x-coord> <y-coord> <z-coord>");
+        	return;
         }
 		
 	}
