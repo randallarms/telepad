@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.2.4
+// |TELEPAD v1.5.2.5
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -26,7 +26,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.2.4";
+	public static String VERSION = "1.5.2.5";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	

@@ -13,6 +13,8 @@ public class Teleprocessing {
 	
 	TelePad plugin;
 	
+	String openStr = ChatColor.RED + "[TP]" + ChatColor.GRAY + " | ";
+	
   //Constructor
 	public Teleprocessing(TelePad plugin) {
 		this.plugin = plugin;
@@ -40,13 +42,13 @@ public class Teleprocessing {
     			String teleLocation = plugin.getConfig().get(teleName).toString();
     			player.teleport(LocSerialization.getLocationFromString(teleLocation));
     		} else {
-        		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport " + args[0] + " was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");        			
+        		player.sendMessage(openStr + "Teleport " + args[0] + " was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");        			
     		}
     		
     		return;
     		
     	} else {
-    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/tele <name>");
+    		player.sendMessage(openStr + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/tele <name>");
     	}
 		
 	}
@@ -62,7 +64,7 @@ public class Teleprocessing {
 		boolean targetFound = Bukkit.getServer().getOnlinePlayers().contains(Bukkit.getServer().getPlayerExact(args[0]));
 		
 		if (args.length > 2 || args.length < 1) {
-    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleother <player> {go/bring}");
+    		player.sendMessage(openStr + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleother <player> {go/bring}");
     		return;
     	}
     		
@@ -80,13 +82,13 @@ public class Teleprocessing {
     			//Bring teleport
     			target.teleport(player.getLocation());
     		} else {
-    			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleother <player> {go/bring}");
+    			player.sendMessage(openStr + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleother <player> {go/bring}");
     		}
     		
     		return;
     		
     	} else {
-    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Player " + args[0] + " was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
+    		player.sendMessage(openStr + "Player " + args[0] + " was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
     	}
 		
 	}
@@ -100,7 +102,7 @@ public class Teleprocessing {
 		
 		if (args.length == 0 || args.length > 1) {
 			
-        	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleset <name>");
+        	player.sendMessage(openStr + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teleset <name>");
         	return;
         	
         } else {
@@ -120,11 +122,11 @@ public class Teleprocessing {
 					successTxt = ChatColor.GREEN + "successfully";
 				}
 				
-				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + teleName + "\" was " + successTxt + ChatColor.GRAY + " created.");
+				player.sendMessage(openStr + "Teleport \"" + teleName + "\" was " + successTxt + ChatColor.GRAY + " created.");
 				return;
         	
         	} else {
-        		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport name \"" + teleName + "\" is " + ChatColor.RED + "already in use" + ChatColor.GRAY + "!");
+        		player.sendMessage(openStr + "Teleport name \"" + teleName + "\" is " + ChatColor.RED + "already in use" + ChatColor.GRAY + "!");
         	}
         	
         	return;
@@ -207,7 +209,7 @@ public class Teleprocessing {
 		
 		if (args.length == 0 || args.length < 1) {
 			if (isPlayer) {
-				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teledel <name>");
+				player.sendMessage(openStr + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/teledel <name>");
 			} else {
 				System.out.println("Incorrect format. Please use: \"/teledel <name>\"");
 			}
@@ -228,13 +230,13 @@ public class Teleprocessing {
 					plugin.saveConfig();
 					if (!plugin.getConfig().contains(teleName)) {
 						if (isPlayer) {
-							player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " deleted.");
+							player.sendMessage(openStr + "Teleport \"" + args[0] + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " deleted.");
 						} else {
 							System.out.println("Teleport \"" + args[0] + "\" was successfully deleted.");
 						}
 					} else {
 						if (isPlayer) {
-							player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " deleted.");
+							player.sendMessage(openStr + "Teleport \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " deleted.");
 						} else {
 							System.out.println("Teleport \"" + args[0] + "\" was not deleted.");
 						}
@@ -242,7 +244,7 @@ public class Teleprocessing {
 	    	
 	    	} else {
 	    		if (isPlayer) {
-	    			player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Teleport name \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
+	    			player.sendMessage(openStr + "Teleport name \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
 	    		}  else {
 					System.out.println("Teleport name \"" + args[0] + "\" was not found.");
 				}
@@ -283,7 +285,7 @@ public class Teleprocessing {
     	}
     	
     	if (isPlayer) {
-    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Here is a list of teleports:\n" + ChatColor.GREEN + teleList);
+    		player.sendMessage(openStr + "Here is a list of teleports:\n" + ChatColor.GREEN + teleList);
     	} else {
     		System.out.println("Here is a list of teleports: " + teleList);
     	}
@@ -313,7 +315,7 @@ public class Teleprocessing {
     	}
     	
     	player.teleport(new Location(player.getWorld(), teleportLocation.getX(), teleportLocation.getY() + 1, teleportLocation.getZ()));
-    	player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | You have jumped " + ChatColor.GREEN + (int)teleportLocation.distance(originalLocation) + ChatColor.GRAY + " meters.");
+    	player.sendMessage(openStr + "You have jumped " + ChatColor.GREEN + (int)teleportLocation.distance(originalLocation) + ChatColor.GRAY + " meters.");
 		
 	}
     
