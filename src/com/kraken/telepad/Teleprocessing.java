@@ -49,6 +49,7 @@ public class Teleprocessing {
     		
     	} else {
     		player.sendMessage(openStr + ChatColor.RED + "Incorrect format. Please use: " + ChatColor.GRAY + "/tele <name>");
+    		return;
     	}
 		
 	}
@@ -89,6 +90,7 @@ public class Teleprocessing {
     		
     	} else {
     		player.sendMessage(openStr + "Player " + args[0] + " was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
+    		return;
     	}
 		
 	}
@@ -241,13 +243,16 @@ public class Teleprocessing {
 							System.out.println("Teleport \"" + args[0] + "\" was not deleted.");
 						}
 					}
-	    	
+					
+					return;
+					
 	    	} else {
 	    		if (isPlayer) {
 	    			player.sendMessage(openStr + "Teleport name \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " found.");
 	    		}  else {
 					System.out.println("Teleport name \"" + args[0] + "\" was not found.");
 				}
+	    		return;
 	    	}
 	    	
 	    }
@@ -289,6 +294,8 @@ public class Teleprocessing {
     	} else {
     		System.out.println("Here is a list of teleports: " + teleList);
     	}
+    	
+    	return;
 		
 	}
 	
@@ -316,6 +323,8 @@ public class Teleprocessing {
     	
     	player.teleport(new Location(player.getWorld(), teleportLocation.getX(), teleportLocation.getY() + 1, teleportLocation.getZ()));
     	player.sendMessage(openStr + "You have jumped " + ChatColor.GREEN + (int)teleportLocation.distance(originalLocation) + ChatColor.GRAY + " meters.");
+    	
+    	return;
 		
 	}
     
