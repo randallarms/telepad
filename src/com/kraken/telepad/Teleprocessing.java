@@ -230,18 +230,16 @@ public class Teleprocessing {
 
 	    			plugin.getConfig().set(teleName, null);
 					plugin.saveConfig();
+					String successText = "not";
+					
 					if (!plugin.getConfig().contains(teleName)) {
-						if (isPlayer) {
-							player.sendMessage(openStr + "Teleport \"" + args[0] + "\" was " + ChatColor.GREEN + "successfully" + ChatColor.GRAY + " deleted.");
-						} else {
-							System.out.println("Teleport \"" + args[0] + "\" was successfully deleted.");
-						}
+						successText = "successfully";
+					}
+
+					if (isPlayer) {
+						player.sendMessage(openStr + "Teleport \"" + args[0] + "\" was " + successText + ChatColor.GRAY + " deleted.");
 					} else {
-						if (isPlayer) {
-							player.sendMessage(openStr + "Teleport \"" + args[0] + "\" was " + ChatColor.RED + "not" + ChatColor.GRAY + " deleted.");
-						} else {
-							System.out.println("Teleport \"" + args[0] + "\" was not deleted.");
-						}
+						System.out.println("Teleport \"" + args[0] + "\" was " + successText + " deleted.");
 					}
 					
 					return;
