@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.2.6
+// |TELEPAD v1.5.2.7
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -26,7 +26,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.2.6";
+	public static String VERSION = "1.5.2.7";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -77,6 +77,15 @@ public class TelePad extends JavaPlugin {
     	
     }
     
+    boolean opCheck(boolean isPlayer, Player player) {
+		if ( isPlayer && !player.isOp() ) {
+    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+    		return false;
+    	} else {
+    		return true;
+    	}
+	}
+    
   //TelePad commands
     @SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -87,7 +96,7 @@ public class TelePad extends JavaPlugin {
 		
 		boolean opRequired = options.get("opRequired");
 		boolean permsRequired = options.get("permsRequired");
-        
+		
       //Player commands
         if ( sender instanceof Player ) {
         	
@@ -210,8 +219,7 @@ public class TelePad extends JavaPlugin {
     	    case "oprequiredtp":
     	    case "opreqtp":
     	    		
-    	    	if ( isPlayer && !player.isOp() ) {
-    	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+    	    	if (!opCheck(isPlayer, player)) {
     	    		return true;
     	    	}
     	    	
@@ -234,8 +242,7 @@ public class TelePad extends JavaPlugin {
     	    case "permsrequiredtp":
     	    case "permsreqtp":
     	    	
-    	    	if ( isPlayer && !player.isOp() ) {
-    	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+    	    	if (!opCheck(isPlayer, player)) {
     	    		return true;
     	    	}
     	    	
@@ -257,8 +264,7 @@ public class TelePad extends JavaPlugin {
 	      //Command: sparkles
     	    case "sparklestp":
     	    	
-    	    	if ( isPlayer && !player.isOp() ) {
-    	    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+    	    	if (!opCheck(isPlayer, player)) {
     	    		return true;
     	    	}
     	    	
