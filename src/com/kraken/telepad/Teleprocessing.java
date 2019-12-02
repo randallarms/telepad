@@ -23,7 +23,7 @@ public class Teleprocessing {
   //"tele" command processing
 	public void teleport(Player player, String[] args) {
 		
-		if ( !player.hasPermission("telepad.tp") && plugin.options.get("permsRequired") ) {
+		if ( !player.isOp() && !player.hasPermission("telepad.tp") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -58,7 +58,7 @@ public class Teleprocessing {
 	@SuppressWarnings("deprecation")
 	public void teleOther(Player player, String[] args) {
 		
-		if ( !player.hasPermission("telepad.teleother") && plugin.options.get("permsRequired") ) {
+		if ( !player.isOp() && !player.hasPermission("telepad.teleother") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -98,7 +98,7 @@ public class Teleprocessing {
   //"teleset" command processing
 	public void teleSet(Player player, String[] args) {
 		
-		if ( !player.hasPermission("telepad.teleset") && plugin.options.get("permsRequired") ) {
+		if ( !player.isOp() && !player.hasPermission("telepad.teleset") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -205,7 +205,7 @@ public class Teleprocessing {
   //"teledel" command processing
 	public void teleDelete(boolean isPlayer, Player player, String[] args) {
 		
-		if ( isPlayer && !player.hasPermission("telepad.teledel") && plugin.options.get("permsRequired") ) {
+		if ( isPlayer && !player.isOp() && !player.hasPermission("telepad.teledel") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -260,7 +260,7 @@ public class Teleprocessing {
   //"telelist" command processing
 	public void teleList(boolean isPlayer, Player player) {
 		
-		if ( isPlayer && !player.hasPermission("telepad.telelist") && plugin.options.get("permsRequired") ) {
+		if ( isPlayer && !player.isOp() && !player.hasPermission("telepad.telelist") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
@@ -300,7 +300,7 @@ public class Teleprocessing {
   //"jump" command processing
 	public void jump(Player player) {
 		
-		if ( !player.hasPermission("telepad.jump") && plugin.options.get("permsRequired") ) {
+		if ( !player.isOp() && !player.hasPermission("telepad.jump") && plugin.options.get("permsRequired") ) {
 			return;
 		}
 		
