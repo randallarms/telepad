@@ -9,6 +9,7 @@ DOWNLOAD (plugin JAR file): https://github.com/randallarms/telepad/blob/master/r
 Changing the values in the 'options.yml' file may change how your server works, so please be sure to back up any server data before editing the options.
 
 Now supporting console commands: "telepad", "teledel", "telelist", "teleset", "opReqTP", "permsReqTP", "sparkles".
+     For the "teleset" command on console, use the format /<command> <name> <consoleWorld> <consoleX> <consoleY> <consoleZ>".
 
 commands: 
 
