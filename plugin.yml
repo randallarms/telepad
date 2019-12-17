@@ -1,6 +1,6 @@
 name: TelePad
 main: com.kraken.telepad.TelePad
-version: 1.5.2.9 (release)
+version: 1.5.2.10 (release)
 commands: 
      telepad:
         description: Info on the TelePad plugin.

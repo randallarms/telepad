@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.2.9
+// |TELEPAD v1.5.2.10
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -26,7 +26,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.2.9";
+	public static String VERSION = "1.5.2.10";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -96,6 +96,8 @@ public class TelePad extends JavaPlugin {
 		
 		boolean opRequired = options.get("opRequired");
 		boolean permsRequired = options.get("permsRequired");
+		
+		String wrongCmdTxt = "Incorrect command parameters. Try typing ";
 		
       //Player commands
         if ( sender instanceof Player ) {
@@ -231,9 +233,9 @@ public class TelePad extends JavaPlugin {
     				return true;
     	    	} else {
     				if (isPlayer) {
-    					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/opReqTP <on/off>\".");
+    					player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + wrongCmdTxt + "\"/opReqTP <on/off>\".");
     				} else {
-    					System.out.println("Try entering \"/opReqTP <on/off>\".");
+    					System.out.println(wrongCmdTxt + "\"/opReqTP <on/off>\".");
     				}
         	    	return true;
     	    	}
@@ -254,9 +256,9 @@ public class TelePad extends JavaPlugin {
     				return true;
     	    	} else {
     				if (isPlayer) {
-	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/permsReqTP <on/off>\".");
+	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + wrongCmdTxt + "\"/permsReqTP <on/off>\".");
     				} else {
-    					System.out.println("Try entering \"/permsReqTP <on/off>\".");
+    					System.out.println(wrongCmdTxt + "\"/permsReqTP <on/off>\".");
     				}
         	    	return true;
     	    	}
@@ -276,9 +278,9 @@ public class TelePad extends JavaPlugin {
     				return true;
     	    	} else {
     				if (isPlayer) {
-	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "Try entering \"/sparklesTP <on/off>\".");
+	    				player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + wrongCmdTxt + "\"/sparklesTP <on/off>\".");
     				} else {
-    					System.out.println("Try entering \"/sparklesTP <on/off>\".");
+    					System.out.println(wrongCmdTxt + "\"/sparklesTP <on/off>\".");
     				}
         	    	return true;
     	    	}
