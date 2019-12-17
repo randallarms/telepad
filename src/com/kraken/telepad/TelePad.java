@@ -1,5 +1,5 @@
 // ========================================================================
-// |TELEPAD v1.5.2.8
+// |TELEPAD v1.5.2.9
 // |
 // | Always free & open-source! If this plugin is being 
 // | sold or re-branded, please let me know. Thanks! 
@@ -26,7 +26,7 @@ import org.bukkit.ChatColor;
 
 public class TelePad extends JavaPlugin {
 	
-	public static String VERSION = "1.5.2.8";
+	public static String VERSION = "1.5.2.9";
 	
 	WeakHashMap<String, Boolean> options = new WeakHashMap<String, Boolean>();
 	
@@ -72,14 +72,14 @@ public class TelePad extends JavaPlugin {
     	try {
         	optionsConfig.save(optionsFile);
 		} catch (IOException ioe) {
-			System.out.println("TelePad could not properly set option '" + option + "', expect possible errors.");
+			System.out.println("TelePad could not properly set option named '" + option + "', expect possible errors.");
 		}
     	
     }
     
     boolean opCheck(boolean isPlayer, Player player) {
 		if ( isPlayer && !player.isOp() ) {
-    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an OP command.");
+    		player.sendMessage(ChatColor.RED + "[TP]" + ChatColor.GRAY + " | " + "This is an op-only command.");
     		return false;
     	} else {
     		return true;
